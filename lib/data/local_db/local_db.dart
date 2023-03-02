@@ -36,11 +36,12 @@ class LocalDatabase {
         CREATE TABLE $tableName (
             ${CardFields.id} $idType,
             ${CardFields.cardName} $textType,
-            ${CardFields.cardNumber} $intType,
+            ${CardFields.cardNumber} $textType,
             ${CardFields.expireDate} $textType,
-            ${CardFields.gradient} $listType,
+            ${CardFields.gradientA} $intType,
+            ${CardFields.gradientB} $intType,
             ${CardFields.iconImage} $textType,
-            ${CardFields.moneyAmount} $textType,
+            ${CardFields.moneyAmount} $intType,
             ${CardFields.owner} $textType
             )
             ''');
@@ -65,7 +66,8 @@ class LocalDatabase {
         CardFields.cardName,
         CardFields.cardNumber,
         CardFields.expireDate,
-        CardFields.gradient,
+        CardFields.gradientA,
+        CardFields.gradientB,
         CardFields.iconImage,
         CardFields.moneyAmount,
         CardFields.owner
@@ -88,5 +90,15 @@ class LocalDatabase {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+    static Future<CardModel> updateCardById(CardModel cardModel) async {
+    var database = await getInstance.getDb();
+    int id = await database.update(
+      tableName,
+      cardModel.toJson(),
+      where: 'id = ?',
+      whereArgs: [cardModel.id],
+    );
+    return cardModel.copyWith(id: id);
   }
 }

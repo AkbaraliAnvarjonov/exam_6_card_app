@@ -12,10 +12,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
       BlocProvider(
-        create: (context) => CardBloc(CardRepository())
-          ..add(
-            GetCards()
-          ),
+        create: (context) => CardBloc(CardRepository())..add(GetCards()),
       )
     ], child: const MyApp());
   }
@@ -30,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Card App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: const CardsPage(),
     );

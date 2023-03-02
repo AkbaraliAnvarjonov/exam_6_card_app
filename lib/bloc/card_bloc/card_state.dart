@@ -11,3 +11,15 @@ class CardLoadSuccess extends CardState {
 
   final List<CardModel> cards;
 }
+
+class AddCardProgres extends CardState {}
+
+class DeleteCardProgres extends CardState {}
+
+class AddCardSuccess extends CardState {}
+
+class DeleteCardSuccess extends CardState {}
+
+class UpdateCardProgres extends CardState {}
+
+class UpdateCardSuccess extends CardState {}

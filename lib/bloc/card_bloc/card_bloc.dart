@@ -7,6 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CardBloc extends Bloc<CardEvent, CardState> {
   CardBloc(this.cardRepository) : super((CardInitial())) {
     on<GetCards>(_fetchCards);
+    on<AddCard>(_addCard);
+    on<DeleteCardById>(_deleteCard);
+    on<UpdateCardById>(_updateCard);
   }
 
   final CardRepository cardRepository;
@@ -19,11 +22,24 @@ class CardBloc extends Bloc<CardEvent, CardState> {
     emit(CardLoadSuccess(cards: cards));
   }
 
-  // _updateCachedCountries(List<CountryModel> countries) async {
-  //   int deletedCount = await countriesRepository.deleteCachedCountries();
-  //   print("O'CHIRILGANLAR SONI:$deletedCount");
-  //   for (var country in countries) {
-  //     await countriesRepository.insertCountryToDb(country);
-  //   }
-  // }
+  _addCard(AddCard event, Emitter<CardState> emit) async {
+    emit(AddCardProgres());
+    await cardRepository.addCard(event.cardModel);
+
+    emit(AddCardSuccess());
+  }
+
+  _deleteCard(DeleteCardById event, Emitter<CardState> emit) async {
+    emit(DeleteCardProgres());
+    await cardRepository.deleteCardById(event.id);
+
+    emit(DeleteCardSuccess());
+  }
+
+  _updateCard(UpdateCardById event, Emitter<CardState> emit) async {
+    emit(UpdateCardProgres());
+    await cardRepository.updateCard(event.cardModel);
+
+    emit(UpdateCardSuccess());
+  }
 }
